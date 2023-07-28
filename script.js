@@ -8,12 +8,13 @@ function drawGrid(size) {
     for(let i = 0; i < size; i++) {
         const row = document.createElement('div');
         row.classList = 'row';
+        row.setAttribute('draggable', false);
         grid.appendChild(row);
         for(let j = 0; j < (size); j++) {
             const square = document.createElement('div');
             square.style.flex = '1';
             square.classList = 'squares';
-            square.style.border = '2px solid black';
+            square.setAttribute('draggable', false);
             row.appendChild(square);
         }
     }
@@ -21,16 +22,37 @@ function drawGrid(size) {
 
 drawGrid(16);
 
-const divs = document.querySelectorAll('.squares');
-//changes the squares colors when you hover the mouse over it
-divs.forEach((square) => {
+//the following code changes the square's color when the table is HEAR a mousedown...
+//...and the square (grid-elements) HEAR that the mouse is over then
+const grid = document.getElementById('grid');
+const gridElements = document.querySelectorAll('.squares');
+let isMouseDown = false;
+
+gridElements.forEach(square => {
     square.addEventListener('mouseover', () => {
-        square.mouseover = square.style.backgroundColor = color;  
+        if(isMouseDown) square.style.backgroundColor = color;
+        console.log("hovering");
     });
 });
 
-const colorPicker = document.getElementById("color-picker");
+grid.addEventListener('mousedown', () => {
+    isMouseDown = true;
+    console.log("mouseDown: " + isMouseDown);
+});
+
+grid.addEventListener('mouseleave', () => {
+    isMouseDown = false;
+    console.log("mouseLeave")
+});
+
+grid.addEventListener('mouseup', () => {
+    console.log("mouseUp");
+    isMouseDown = false;
+});
+
+
 //changes the color used to paint the squares
+const colorPicker = document.getElementById("color-picker");
 colorPicker.addEventListener("input", function() {
  color = this.value;
   console.log( color);
