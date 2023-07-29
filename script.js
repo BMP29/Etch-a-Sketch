@@ -4,9 +4,17 @@ let color = DEFAULTCOLOR;
 let isMouseDown = false;
 let isRandom = false;
 
+
+const colorPicker = document.getElementById("color-picker");
+const slider = document.getElementById('myRange');
+const btnClear = document.getElementById('clear');
+const btnRanColors = document.getElementById('ranColors');
+const grid = document.getElementById('grid');
+
+drawGrid(16);
+
 //draw the grid
 function drawGrid(size) {
-    const grid = document.querySelector('#grid');
     const paraSize = document.getElementById('sizePara');
     paraSize.innerHTML = `${size} x ${size}`;
     for(let i = 0; i < size; i++) {
@@ -63,32 +71,30 @@ grid.addEventListener('mouseup', () => {
     isMouseDown = false;
 });
 
-
-drawGrid(16);
-
 //changes the color used to paint the squares
-const colorPicker = document.getElementById("color-picker");
 colorPicker.addEventListener("input", function() {
     color = this.value;
     isRandom = false;
     console.log(color);
 });
 
+//re-setup grid
 function resetGrid() {
-    const rows = document.querySelectorAll('.row');
-    rows.forEach(row => {
-        grid.removeChild(row);
-    });
+    grid.innerHTML = '';
     drawGrid(+slider.value);
 }
 
-const slider = document.getElementById('myRange');
-slider.addEventListener('mouseup', resetGrid);
+//update the paragraph that shows the size of the canvas
+function updateSizePara() {
+    const paraSize = document.getElementById('sizePara');
+    paraSize.innerHTML = `${slider.value} x ${slider.value}`;
+}
 
-const btnClear = document.getElementById('clear');
+slider.addEventListener('mouseup', resetGrid);
+slider.addEventListener('input', updateSizePara);
+
 btnClear.addEventListener('click', resetGrid);
 
-const btnRanColors = document.getElementById('ranColors');
 btnRanColors.addEventListener('click', () => {
     if(isRandom) isRandom = false;
     else {
