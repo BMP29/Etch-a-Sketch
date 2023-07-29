@@ -7,11 +7,22 @@
     <script src="./script.js" defer></script>
 </head>
 <body>
-    <label for="color-picker">Select a color:</label>
-    <input id="color-picker" type="color">
-      
-    
-    <div id="grid" draggable="false">
+    <div id="content">
+        <div id="settings">
+            <div class="colorPicker">
+                <input id="color-picker" type="color">
+            </div>
+
+            <div class="slidecontainer">
+                <p id="sizePara"></p>
+                <input type="range" min="2" max="64" value="16" class="slider" id="myRange">
+            </div>
+
+            <button id="clear">Clear</button>
+            <button id="ranColors">Random Colors</button>
+        </div>
+
+        <div id="grid" draggable="false"></div>
     </div>
 </body>
 </html>
